@@ -91,10 +91,7 @@ export async function fetchCardData() {
 }
 
 const ITEMS_PER_PAGE = 6;
-export async function fetchFilteredInvoices(
-  query: string,
-  currentPage: number,
-) {
+export async function fetchFilteredInvoices(query: string, currentPage: number) {
   noStore();
   const offset = (currentPage - 1) * ITEMS_PER_PAGE;
 
@@ -117,15 +114,15 @@ export async function fetchFilteredInvoices(
         invoices.date::text ILIKE ${`%${query}%`} OR
         invoices.status ILIKE ${`%${query}%`}
       ORDER BY invoices.date DESC
-      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
-    `;
+      LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}`;
 
     return invoices.rows;
   } catch (error) {
-    console.error('Database Error:', error);
+    console.error('Database Error (fetchFilteredInvoices):', error);
     throw new Error('Failed to fetch invoices.');
   }
 }
+
 
 export async function fetchInvoicesPages(query: string) {
   noStore();
